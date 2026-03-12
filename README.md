@@ -27,7 +27,7 @@ Dự án được xây dựng trên mô hình Full-stack hiện đại:
 
 * **Frontend:** [Next.js](https://nextjs.org/) (App Router), Tailwind CSS, Shadcn UI.
 * **Backend:** [NestJS](https://nestjs.com/) (Node.js framework), TypeScript.
-* **Database:** PostgreSQL (Lưu trữ dữ liệu quan hệ).
+* **Database:** MySQL (Lưu trữ dữ liệu quan hệ).
 * **ORM:** [Prisma](https://www.prisma.io/) (Quản lý schema và truy vấn dữ liệu).
 * **Real-time:** Socket.io (Thông báo & Chat), WebRTC/Agora (Video call).
 * **Authentication:** JWT (JSON Web Token) & NextAuth.js.
