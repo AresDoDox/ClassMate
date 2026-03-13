@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -24,7 +23,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   // Quan hệ
-  taughtClasses Class[]       @relation("TutorClasses")
+  taughtClasses Class[]      @relation("TutorClasses")
   enrollments   Enrollment[]
   attendances   Attendance[]
   submissions   Submission[]
@@ -40,10 +39,10 @@ model Class {
   updatedAt   DateTime @updatedAt
 
   // Quan hệ
-  tutor       User         @relation("TutorClasses", fields: [tutorId], references: [id])
-  students    Enrollment[]
-  schedules   Schedule[]
-  materials   Material[]
+  tutor     User         @relation("TutorClasses", fields: [tutorId], references: [id])
+  students  Enrollment[]
+  schedules Schedule[]
+  materials Material[]
 }
 
 // Bảng trung gian n-n: Học sinh tham gia lớp
@@ -74,10 +73,10 @@ enum ScheduleStatus {
 model Schedule {
   id        String         @id @default(uuid())
   classId   String
-  title     String?        // Tên buổi học (VD: Buổi 1: Ôn tập đại số)
+  title     String? // Tên buổi học (VD: Buổi 1: Ôn tập đại số)
   date      DateTime       @db.Date
-  startTime String         // VD: "08:00"
-  endTime   String         // VD: "10:00"
+  startTime String // VD: "08:00"
+  endTime   String // VD: "10:00"
   type      ScheduleType   @default(OFFLINE)
   status    ScheduleStatus @default(SCHEDULED)
   createdAt DateTime       @default(now())
@@ -118,9 +117,9 @@ model Material {
   classId     String
   title       String
   description String?
-  fileUrl     String?      // Link tới AWS S3 / Cloudinary
+  fileUrl     String? // Link tới AWS S3 / Cloudinary
   type        MaterialType @default(DOCUMENT)
-  dueDate     DateTime?    // Dùng cho type = ASSIGNMENT
+  dueDate     DateTime? // Dùng cho type = ASSIGNMENT
   createdAt   DateTime     @default(now())
 
   class       Class        @relation(fields: [classId], references: [id])
@@ -129,13 +128,13 @@ model Material {
 
 // Nộp bài tập
 model Submission {
-  id         String   @id @default(uuid())
-  materialId String
-  studentId  String
-  fileUrl    String?
-  content    String?  @db.Text
-  score      Float?
-  feedback   String?  @db.Text
+  id          String   @id @default(uuid())
+  materialId  String
+  studentId   String
+  fileUrl     String?
+  content     String?  @db.Text
+  score       Float?
+  feedback    String?  @db.Text
   submittedAt DateTime @default(now())
 
   material Material @relation(fields: [materialId], references: [id])
