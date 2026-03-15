@@ -15,7 +15,14 @@ async function bootstrap() {
     }),
   );
 
-  // 2. Cấu hình Swagger API Document
+  // 2. Kích hoạt CORS (Cross-Origin Resource Sharing)
+  app.enableCors({
+    origin: true, // Cho phép tất cả origin hoặc liệt kê cụ thể ['http://localhost:3000']
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
+
+  // 3. Cấu hình Swagger API Document
   const config = new DocumentBuilder()
     .setTitle('ClassMate API')
     .setDescription(
