@@ -1,0 +1,60 @@
+<mxfile host="65bd71144e">
+    <diagram name="Frontend-Friendly ERD" id="0">
+        <mxGraphModel dx="1142" dy="1017" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="user" value="&lt;font color=&quot;#000000&quot;&gt;👤 USER\n(id, role)\n\n- tutor\n- student&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="300" width="180" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="class" value="&lt;font color=&quot;#000000&quot;&gt;🏫 CLASS\n(id, tutorId)\n\n1 class = 1 tutor&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="80" width="200" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="enroll" value="&lt;font color=&quot;#000000&quot;&gt;📝 ENROLLMENT\n(studentId, classId)\n\nN-N bridge&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="410" width="200" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="schedule" value="&lt;font color=&quot;#000000&quot;&gt;📅 SCHEDULE\n(classId)\n\nEach class has many sessions&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="80" width="220" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="attendance" value="&lt;font color=&quot;#000000&quot;&gt;✅ ATTENDANCE\n(scheduleId, studentId)\n\nCheck-in per session&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="300" width="220" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="material" value="&lt;font color=&quot;#000000&quot;&gt;📚 MATERIAL\n(classId)\n\nDocs / Video / Assignment&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="720" y="430" width="220" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="submission" value="&lt;font color=&quot;#000000&quot;&gt;📥 SUBMISSION\n(materialId, studentId)\n\nStudent submits&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="610" width="220" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" value="teaches" style="endArrow=block;html=1;" parent="1" source="user" target="class" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="joins" style="endArrow=block;html=1;" parent="1" source="user" target="enroll" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" value="belongs to" style="endArrow=block;html=1;" parent="1" source="enroll" target="class" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" value="has sessions" style="endArrow=block;html=1;" parent="1" source="class" target="schedule" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="tracks" style="endArrow=block;html=1;" parent="1" source="schedule" target="attendance" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" value="attends" style="endArrow=block;html=1;" parent="1" source="user" target="attendance" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" value="provides" style="endArrow=block;html=1;" parent="1" source="class" target="material" edge="1">
+                    <mxGeometry x="0.0009" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e8" value="has" style="endArrow=block;html=1;" parent="1" source="material" target="submission" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" value="submits" style="endArrow=block;html=1;" parent="1" source="user" target="submission" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
