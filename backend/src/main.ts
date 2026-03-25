@@ -2,6 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AllExceptionsFilter } from './common/filters/http-exception.filter';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { ClassSerializerInterceptor } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +17,13 @@ async function bootstrap() {
       forbidNonWhitelisted: true, // Báo lỗi nếu Client cố tình gửi lên field rác
       transform: true, // Tự động convert kiểu dữ liệu (vd: string url param '1' thành number 1)
     }),
+  );
+
+  // Kích hoạt Exception Filter & Interceptor toàn cục
+  app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalInterceptors(
+    new TransformInterceptor(),
+    new ClassSerializerInterceptor(app.get(Reflector)),
   );
 
   // 2. Kích hoạt CORS (Cross-Origin Resource Sharing)
