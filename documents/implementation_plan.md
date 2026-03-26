@@ -62,11 +62,20 @@ Dự án ClassMate là hệ thống quản lý giáo dục toàn diện. Trướ
 - Public thư mục `uploads` thành URL tĩnh bằng `ServeStaticModule`.
 - Viết tài liệu hướng dẫn `documents/09_Xu_Ly_File_Multer.md`.
 
-### Chuẩn hóa Dữ liệu API (Phase 13)
-- **Global Exception Filter**: Viết bộ lọc lỗi toàn cục. Khi hệ thống sập hoặc quăng các lỗi vặt, Filter sẽ gói gọn chúng thành định dạng chung `{ statusCode, timestamp, path, message }` để Frontend dễ đọc.
-- **Transform Interceptor**: Áp dụng Interceptor đánh chặn phản hồi để chuẩn hóa định dạng kết quả thành `{ statusCode, data, message }` cho mọi API (thành công).
-- **Auto Exclude Password**: Áp dụng cơ chế `@Exclude()` của `class-transformer` để Backend tự cắt bỏ mật khẩu trả về, thay vì phải gõ tay lọc từng trường mỗi khi Select Query từ Prisma.
-- Viết tài liệu lưu tại `documents/10_Interceptor_Va_Filter.md`.
+### Chuẩn hóa Dữ liệu API (Phase 13 - Hoàn tất)
+- Global Exception Filter: Đã áp dụng `AllExceptionsFilter`.
+- Transform Interceptor: Đã đóng gói Response chuẩn `{ statusCode, data, message }`.
+- Auto Exclude Password: Đã bảo vệ User Entity bằng `@Exclude()`.
+
+### Phát triển Nghiệp vụ: Quản lý Lớp học (Phase 14 - Hoàn tất)
+- Tích hợp 100% Fullstack API và React UI cho tính năng tạo lớp, tham gia lớp học. Đã phân quyền ẩn/hiện logic.
+
+### Cấp phát Tài khoản Admin & Dữ liệu mẫu (Phase 15)
+- Giải quyết bài toán "Trắng dữ liệu": Viết cơ chế **Database Seeding** cho Prisma.
+- Kịch bản (`prisma/seed.ts`):
+  - Khởi tạo tự động 1 tài khoản quản trị Administrator tối cao.
+  - Khởi tạo 1 tài khoản Giáo viên (Tutor) kèm theo vài lớp học mở sẵn.
+  - Khởi tạo 1 tài khoản Học sinh (Student) để test chức năng Enroll.
 
 ## Verification Plan
 - Chạy thử cả hai project `frontend` và `backend` để đảm bảo chúng khởi động thành công trên các port mặc định (frontend: 3000, backend: 3001).
