@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateClassDto {
   @ApiProperty({ description: 'Tên của lớp học', example: 'Toán Cao Cấp 101' })
@@ -13,5 +13,13 @@ export class CreateClassDto {
     example: 'Lớp học dành cho sinh viên năm nhất',
     required: false,
   })
+  @IsOptional()
+  @IsString()
   description?: string;
+
+  @ApiProperty({ description: 'Môn học', example: 'Toán' })
+  @IsNotEmpty({ message: 'Môn học không được để trống' })
+  @IsString()
+  @MaxLength(100)
+  subject: string;
 }

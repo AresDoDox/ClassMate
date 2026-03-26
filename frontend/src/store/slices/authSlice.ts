@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Cấu trúc Dữ liệu người dùng
-interface User {
-  id: number;
+export interface User {
+  id: string;
   email: string;
   fullName: string;
+  role?: string;
 }
 
 // Cấu trúc State của Slice Auth
