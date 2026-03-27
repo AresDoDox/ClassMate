@@ -3,7 +3,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -68,7 +67,7 @@ export default function DashboardPage() {
   }, [user, router]);
 
   const handleLogout = () => {
-    Cookies.remove('access_token');
+    localStorage.removeItem('access_token');
     dispatch(logout());
     router.push('/login');
   };
