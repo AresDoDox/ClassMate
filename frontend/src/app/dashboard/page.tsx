@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/store/store';
-import { logout } from '@/store/slices/authSlice';
+import { setCredentials, logout } from '@/store/slices/authSlice';
 
 // API
 import { fetchClasses, enrollClass, ClassItem } from '@/lib/api/classes';
@@ -42,13 +42,17 @@ export default function DashboardPage() {
 
     const initDashboard = async () => {
       // Giả lập độ trễ tránh cảnh báo setState Component Update NextJS 15
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
+      // 1. Nếu Redux trống (Do F5), cố gắng khôi phục lại từ LocalStorage
       if (!user) {
         const localUser = localStorage.getItem('user');
-        if (!localUser) {
+        const localToken = localStorage.getItem('access_token');
+        
+        if (localUser && localToken) {
+          // Khôi phục thành công -> Lưu ngược vào Redux Store
+          dispatch(setCredentials({ user: JSON.parse(localUser), access_token: localToken }));
+        } else {
           router.push('/login');
-          return; // Dừng lại nếu chưa đăng nhập
+          return; // Dừng lại nếu localStorage cũng trống (Chưa đăng nhập)
         }
       }
 
@@ -64,7 +68,7 @@ export default function DashboardPage() {
     return () => {
       mounted = false;
     };
-  }, [user, router]);
+  }, [user, router, dispatch]);
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
@@ -73,6 +77,7 @@ export default function DashboardPage() {
   };
 
   const handleEnroll = async (classId: string) => {
+    console.log('classId: ', classId)
     try {
       await enrollClass(classId);
       // Tải lại danh sách lớp để cập nhật sĩ số tăng lên từ Backend

@@ -70,12 +70,19 @@ Dự án ClassMate là hệ thống quản lý giáo dục toàn diện. Trướ
 ### Phát triển Nghiệp vụ: Quản lý Lớp học (Phase 14 - Hoàn tất)
 - Tích hợp 100% Fullstack API và React UI cho tính năng tạo lớp, tham gia lớp học. Đã phân quyền ẩn/hiện logic.
 
-### Cấp phát Tài khoản Admin & Dữ liệu mẫu (Phase 15)
-- Giải quyết bài toán "Trắng dữ liệu": Viết cơ chế **Database Seeding** cho Prisma.
-- Kịch bản (`prisma/seed.ts`):
-  - Khởi tạo tự động 1 tài khoản quản trị Administrator tối cao.
-  - Khởi tạo 1 tài khoản Giáo viên (Tutor) kèm theo vài lớp học mở sẵn.
-  - Khởi tạo 1 tài khoản Học sinh (Student) để test chức năng Enroll.
+### Cấp phát Tài khoản Admin & Dữ liệu mẫu (Phase 15 - Hoàn tất)
+- Tự động sinh dữ liệu cơ bản (Admin, Tutor, Student, Sample Class) bằng Prisma Seed. Khắc phục vấn đề trắng dữ liệu đăng nhập.
+
+### Tính năng Không gian Lớp học & Tài liệu (Phase 16)
+- **Mục tiêu**: Xây dựng một "Phòng học ảo" chi tiết khi người dùng nhấn vào từng Thẻ lớp học trên Dashboard. Kèm theo tính năng Giáo viên phát tài liệu.
+- **Backend**:
+  - Viết API `GET /classes/:id`: Trả về chi tiết lớp học, kèm mảng `materials` và danh sách học viên enroll.
+  - Khởi tạo thư mục `Materials` CRUD: API `POST /classes/:id/materials` cho phép Giáo viên tải file lên và đính kèm vào lớp học. API này sẽ sử dụng lại endpoint Upload File đã thiết lập ở Phase 12.
+- **Frontend (`/dashboard/class/[id]`)**:
+  - Áp dụng cấu trúc **Dynamic Routing** của Next.js để tạo trang chi tiết `/dashboard/class/[classId]`.
+  - Bố cục trang bao gồm Header tên lớp, và khu vực Tabs (Tổng quan, Tài liệu, Danh sách Lớp).
+  - Giao diện Giáo viên: Có nút "Upload Tài nguyên" mở Modal tải file đính kèm.
+  - Giao diện Học sinh: Hiển thị danh sách file và có nút "Tải về".
 
 ## Verification Plan
 - Chạy thử cả hai project `frontend` và `backend` để đảm bảo chúng khởi động thành công trên các port mặc định (frontend: 3000, backend: 3001).
