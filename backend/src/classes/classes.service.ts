@@ -41,6 +41,16 @@ export class ClassesService {
       include: {
         tutor: { select: { fullName: true, email: true } },
         _count: { select: { students: true } },
+        students: {
+          include: {
+            student: {
+              select: { id: true, fullName: true, email: true, role: true },
+            },
+          },
+        },
+        materials: {
+          orderBy: { createdAt: 'desc' },
+        },
       },
     });
 

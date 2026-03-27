@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Users, LogIn } from 'lucide-react';
@@ -12,6 +13,8 @@ interface ClassCardProps {
 }
 
 export function ClassCard({ data, onEnroll, isStudent, enrolled }: ClassCardProps) {
+  const router = useRouter();
+
   return (
     <Card className="flex flex-col h-full hover:shadow-md transition-shadow">
       <CardHeader>
@@ -41,20 +44,25 @@ export function ClassCard({ data, onEnroll, isStudent, enrolled }: ClassCardProp
       
       <CardFooter>
         {isStudent ? (
-          <Button 
-            className="w-full" 
-            variant={enrolled ? "secondary" : "default"}
-            disabled={enrolled}
-            onClick={() => onEnroll(data.id)}
-          >
-            {enrolled ? (
-              <span className="flex items-center gap-2">Tham gia thành công</span>
-            ) : (
+          enrolled ? (
+            <Button 
+              variant="default" 
+              className="w-full bg-green-600 hover:bg-green-700 text-white" 
+              onClick={() => router.push(`/dashboard/class/${data.id}`)}
+            >
+              Tiến vào Lớp học
+            </Button>
+          ) : (
+            <Button 
+              className="w-full" 
+              variant="default"
+              onClick={() => onEnroll(data.id)}
+            >
               <span className="flex items-center gap-2"><LogIn className="h-4 w-4" /> Tham gia lớp</span>
-            )}
-          </Button>
+            </Button>
+          )
         ) : (
-          <Button variant="outline" className="w-full">Xem chi tiết</Button>
+          <Button variant="outline" className="w-full" onClick={() => router.push(`/dashboard/class/${data.id}`)}>Xem chi tiết</Button>
         )}
       </CardFooter>
     </Card>

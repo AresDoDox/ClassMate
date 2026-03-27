@@ -11,21 +11,22 @@ export interface ClassItem {
   _count: { students: number };
 }
 
-// 1. Lấy danh sách toàn bộ Lớp học
 export const fetchClasses = async (): Promise<ClassItem[]> => {
   const { data } = await axiosClient.get('/classes');
-  // Backend đã áp dụng TransformInterceptor nên cấu trúc chuẩn là { statusCode, message, data }
   return data.data;
 };
 
-// 2. Giáo viên Tạo lớp học mới
 export const createClass = async (payload: { name: string; subject: string; description?: string }) => {
   const { data } = await axiosClient.post('/classes', payload);
   return data.data;
 };
 
-// 3. Học sinh tham gia lớp học
 export const enrollClass = async (classId: string) => {
-  const { data } = await axiosClient.post(`/classes/${classId}/enroll`);
-  return data;
+  const response = await axiosClient.post(`/classes/${classId}/enroll`);
+  return response.data.data;
+};
+
+export const fetchClassInfo = async (classId: string) => {
+  const response = await axiosClient.get(`/classes/${classId}`);
+  return response.data.data;
 };
