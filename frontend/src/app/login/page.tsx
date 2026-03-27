@@ -4,7 +4,6 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { api } from '@/lib/axios';
-import Cookies from 'js-cookie';
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -67,10 +66,12 @@ function LoginForm() {
     try {
       // Gọi API Login qua Axios
       const response = await api.post('/auth/login', values);
-      const { access_token, user } = response.data;
 
-      // Lưu Token vào Cookie
-      Cookies.set('access_token', access_token, { expires: 1 }); // Lưu 1 ngày
+      // Bóc tách lớp vỏ Transform Interceptor của Backend
+      const { access_token, user } = response.data.data;
+
+      // Lưu Token vào LocalStorage
+      localStorage.setItem('access_token', access_token);
 
       // Đẩy State lên Redux Store
       dispatch(setCredentials({ user, access_token }));
