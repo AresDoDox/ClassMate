@@ -73,16 +73,28 @@ Dự án ClassMate là hệ thống quản lý giáo dục toàn diện. Trướ
 ### Cấp phát Tài khoản Admin & Dữ liệu mẫu (Phase 15 - Hoàn tất)
 - Tự động sinh dữ liệu cơ bản (Admin, Tutor, Student, Sample Class) bằng Prisma Seed. Khắc phục vấn đề trắng dữ liệu đăng nhập.
 
-### Tính năng Không gian Lớp học & Tài liệu (Phase 16)
-- **Mục tiêu**: Xây dựng một "Phòng học ảo" chi tiết khi người dùng nhấn vào từng Thẻ lớp học trên Dashboard. Kèm theo tính năng Giáo viên phát tài liệu.
-- **Backend**:
-  - Viết API `GET /classes/:id`: Trả về chi tiết lớp học, kèm mảng `materials` và danh sách học viên enroll.
-  - Khởi tạo thư mục `Materials` CRUD: API `POST /classes/:id/materials` cho phép Giáo viên tải file lên và đính kèm vào lớp học. API này sẽ sử dụng lại endpoint Upload File đã thiết lập ở Phase 12.
-- **Frontend (`/dashboard/class/[id]`)**:
-  - Áp dụng cấu trúc **Dynamic Routing** của Next.js để tạo trang chi tiết `/dashboard/class/[classId]`.
-  - Bố cục trang bao gồm Header tên lớp, và khu vực Tabs (Tổng quan, Tài liệu, Danh sách Lớp).
-  - Giao diện Giáo viên: Có nút "Upload Tài nguyên" mở Modal tải file đính kèm.
-  - Giao diện Học sinh: Hiển thị danh sách file và có nút "Tải về".
+### Tính năng Không gian Lớp học & Tài liệu (Phase 16 - Hoàn tất)
+- Áp dụng cấu trúc **Dynamic Routing** của Next.js để tạo trang chi tiết `/dashboard/class/[classId]`.
+- Phân quyền Upload tài nguyên cho Tutor, hiển thị danh sách cho Student. Giao diện UX/UI hai Tab (Tài nguyên và Lớp học).
+
+### Tính năng Bài tập & Chấm Bài (Phase 17 - ĐÃ BỎ QUA)
+- Nhằm tối ưu thời lượng khóa học, Phase này đã được đánh dấu là *Bỏ qua* theo yêu cầu của học viên dự án.
+
+### Quản lý Lịch học & Điểm danh (Phase 18)
+- **Mục tiêu**: Giáo viên quản lý các buổi học thực tế (Schedules) và điểm danh vắng, trễ (Attendances) cho từng học sinh. Học sinh theo dõi được lịch học sắp tới.
+- **Backend (Schedules & Attendances)**:
+  - Khởi tạo thư mục CRUD `Schedules` (`npx nest g resource schedules --no-spec`) và `Attendances`.
+  - API `POST /schedules`: Cho phép TUTOR tạo buổi học mới (Chứa `title`, `date`, `startTime`, `endTime`, `type`).
+  - API `GET /classes/:classId/schedules`: Lấy toàn bộ lịch học của lớp kèm thông tin điểm danh.
+  - API `POST /attendances/bulk`: API chịu trách nhiệm nhận Array điểm danh của cả lớp (Upsert `status` là `PRESENT/ABSENT/LATE` kèm `note`) cho một `scheduleId`.
+- **Frontend**:
+  - **Class Detail Page**: Thêm một Tab `Lịch học & Điểm danh` ngay bên cạnh Tab Tài liệu và Sinh viên.
+  - **Tutor View**: Gồm Nút `Tạo Lịch Học` (Dùng React Hook Form để nhập ngày/giờ). Click vào mỗi thẻ Lịch Học sẽ mở modal `Bảng Điểm Danh` cho phép xổ Dropdown chỉnh trạng thái của từng sinh viên trong lớp.
+  - **Student View**: Giản lược các nút thao tác. Học sinh chỉ nhìn thấy Lịch học và dòng Badge trạng thái điểm danh của cá nhân mình.
+
+## User Review Required
+> [!IMPORTANT]
+> Đây là Phase xương sống của việc học tập tương tác! Sẽ cần bổ sung quan hệ Model thông qua Redux Toolkit hoặc Component trực tiếp. Bạn vui lòng xem qua và đồng ý để chúng ta bắt đầu triển khai ngay!
 
 ## Verification Plan
 - Chạy thử cả hai project `frontend` và `backend` để đảm bảo chúng khởi động thành công trên các port mặc định (frontend: 3000, backend: 3001).
