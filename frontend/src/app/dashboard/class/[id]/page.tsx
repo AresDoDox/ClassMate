@@ -11,8 +11,9 @@ import { fetchClassInfo } from '@/lib/api/classes';
 // UI Components
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, BookOpen, Users, FileText, Download } from 'lucide-react';
+import { ArrowLeft, BookOpen, Users, FileText, Download, Calendar } from 'lucide-react';
 import { CreateMaterialDialog } from '@/components/materials/create-material-dialog';
+import { SchedulesTab } from '@/components/schedules/schedules-tab';
 
 interface ClassDetailType {
   id: string;
@@ -127,8 +128,9 @@ export default function ClassDetailPage() {
 
         {/* Nội dung Môn Học bằng View Tabs */}
         <Tabs defaultValue="materials" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 p-1 bg-muted/50 rounded-xl mb-6 shadow-inner !h-auto cursor-pointer">
+          <TabsList className="grid w-full grid-cols-3 p-1 bg-muted/50 rounded-xl mb-6 shadow-inner !h-auto cursor-pointer">
             <TabsTrigger value="materials" className="rounded-lg py-2 data-[state=active]:shadow-sm cursor-pointer">Tài nguyên Lớp</TabsTrigger>
+            <TabsTrigger value="schedules" className="rounded-lg py-2 data-[state=active]:shadow-sm cursor-pointer">Lịch học</TabsTrigger>
             <TabsTrigger value="students" className="rounded-lg py-2 data-[state=active]:shadow-sm cursor-pointer">Danh sách Sinh viên</TabsTrigger>
           </TabsList>
           
@@ -190,6 +192,11 @@ export default function ClassDetailPage() {
                })}
              </div>
             )}
+          </TabsContent>
+
+          {/* TAB LỊCH HỌC VÀ ĐIỂM DANH */}
+          <TabsContent value="schedules" className="space-y-6">
+            <SchedulesTab classId={classData.id} isTutor={isTutor} classStudents={classData.students || []} />
           </TabsContent>
 
           {/* TAB SINH VIÊN (STUDENTS) */}
